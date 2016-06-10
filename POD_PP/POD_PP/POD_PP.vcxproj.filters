@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HeapPriorityQueue.h">
+    <ClInclude Include="HeapMaxPriorityQueue.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapMinPriorityQueue.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

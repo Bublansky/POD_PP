@@ -1,8 +1,4 @@
 ﻿  Main.cpp
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(7): warning C4200: nonstandard extension used: zero-sized array in struct/union
-  c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(7): note: This member will be ignored by a defaulted constructor or copy/move assignment operator
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(29): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(128): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(201): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heappriorityqueue.h(284): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapminpriorityqueue.h(28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapminpriorityqueue.h(132): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
   POD_PP.vcxproj -> C:\Users\Ludus\Documents\GitHub\POD_PP\POD_PP\Debug\POD_PP.exe
