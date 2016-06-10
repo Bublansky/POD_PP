@@ -1,4 +1,5 @@
 ﻿  Main.cpp
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapminpriorityqueue.h(28): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapminpriorityqueue.h(132): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapmaxpriorityqueue.h(53): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapmaxpriorityqueue.h(36): warning C4101: 'aux': unreferenced local variable
+c:\users\ludus\documents\github\pod_pp\pod_pp\pod_pp\heapmaxpriorityqueue.h(168): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
   POD_PP.vcxproj -> C:\Users\Ludus\Documents\GitHub\POD_PP\POD_PP\Debug\POD_PP.exe

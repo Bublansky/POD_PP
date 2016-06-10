@@ -1,36 +1,48 @@
 #include<iostream>
+
+using namespace std;
+
 class heap_min_priority_queue
 {
 private:
 	int heap_size = 0;
 	const int infinite = 9999;
-	int values[50], Queue[50][2];
+	int Queue[50][2];
 
-public:
-	heap_min_priority_queue();
-	void build_min_heap(int A[], int size);
-	void Min_heapify(int A[], int i);
-	void Insert(int A[], int key, int value);
-	int Minimum(int A[]);
-	int Extract_min(int A[]);
-	bool Decrease_key(int A[], int i, int key);
 	int Parent(int i);
 	int Left(int i);
 	int Right(int i);
+
+public:
+	heap_min_priority_queue();
+	void build_min_heap();
+	void Min_heapify(int i);
+	void Insert(int key, int value);
+	int Minimum();
+	int Extract_min();
+	bool Decrease_key(int i, int key);
+	
+	void ShowQueue();
 };
 heap_min_priority_queue::heap_min_priority_queue()
 {
 };
-void heap_min_priority_queue::build_min_heap(int A[], int size)
+void heap_min_priority_queue::ShowQueue()
 {
-	heap_size = size;
-
-	for (int i = trunc(size / 2); i >= 1; i--)
+	for (int i = 1; i < heap_size + 1; i++)
 	{
-		Min_heapify(A, i);
+		cout << Queue[i][0] << ", " << Queue[i][1] << endl;
+	}
+}
+void heap_min_priority_queue::build_min_heap()
+{
+
+	for (int i = trunc(heap_size / 2); i >= 1; i--)
+	{
+		Min_heapify(i);
 	}
 };
-void heap_min_priority_queue::Min_heapify(int A[], int i)
+void heap_min_priority_queue::Min_heapify(int i)
 {
 	int l = Left(i);
 	int r = Right(i);
@@ -60,10 +72,10 @@ void heap_min_priority_queue::Min_heapify(int A[], int i)
 		Queue[i][1] = Queue[smallest][1];
 		Queue[smallest][1] = aux;
 
-		Min_heapify(A, smallest);
+		Min_heapify(smallest);
 	}
 };
-void heap_min_priority_queue::Insert(int A[], int key, int value)
+void heap_min_priority_queue::Insert(int key, int value)
 {
 	//aumenta a quantidade de itens na fila
 	heap_size++;
@@ -72,16 +84,17 @@ void heap_min_priority_queue::Insert(int A[], int key, int value)
 
 	//indice 0 é a key
 	Queue[heap_size][0] = infinite;
+	Queue[heap_size][1] = value;
+	//values[heap_size] = value;
 
-	values[heap_size] = value;
-
-	Decrease_key(A, heap_size, key);
+	Decrease_key(heap_size, key);
+	//Min_heapify(heap_size);
 };
-int heap_min_priority_queue::Minimum(int A[])
+int heap_min_priority_queue::Minimum()
 {
 	return Queue[1][1];
 }
-int heap_min_priority_queue::Extract_min(int A[])
+int heap_min_priority_queue::Extract_min()
 {
 	if (heap_size < 1)
 	{
@@ -96,11 +109,11 @@ int heap_min_priority_queue::Extract_min(int A[])
 
 	heap_size -= 1;
 
-	Min_heapify(A, 1);
+	Min_heapify(1);
 
 	return min;
 };
-bool heap_min_priority_queue::Decrease_key(int A[], int i, int key)
+bool heap_min_priority_queue::Decrease_key(int i, int key)
 {
 	int aux;
 
