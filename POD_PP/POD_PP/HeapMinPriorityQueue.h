@@ -46,7 +46,7 @@ void heap_min_priority_queue::Min_heapify(int i)
 {
 	int l = Left(i);
 	int r = Right(i);
-	int smallest, aux;
+	int smallest, aux1, aux2;
 
 	if (l <= heap_size && Queue[i][0] > Queue[l][0])
 	{
@@ -63,14 +63,14 @@ void heap_min_priority_queue::Min_heapify(int i)
 	if (smallest != i)
 	{
 		//troca as chaves
-		aux = Queue[i][0];
+		aux1 = Queue[i][0];
 		Queue[i][0] = Queue[smallest][0];
-		Queue[smallest][0] = aux;
+		Queue[smallest][0] = aux1;
 
 		//troca os valores
-		aux = Queue[i][1];
+		aux2 = Queue[i][1];
 		Queue[i][1] = Queue[smallest][1];
-		Queue[smallest][1] = aux;
+		Queue[smallest][1] = aux2;
 
 		Min_heapify(smallest);
 	}
@@ -88,7 +88,8 @@ void heap_min_priority_queue::Insert(int key, int value)
 	//values[heap_size] = value;
 
 	Decrease_key(heap_size, key);
-	//Min_heapify(heap_size);
+	Min_heapify(heap_size);
+	//build_min_heap();
 };
 int heap_min_priority_queue::Minimum()
 {
@@ -115,7 +116,7 @@ int heap_min_priority_queue::Extract_min()
 };
 bool heap_min_priority_queue::Decrease_key(int i, int key)
 {
-	int aux;
+	int aux1, aux2;
 
 	if (key > Queue[i][0])
 	{
@@ -127,14 +128,14 @@ bool heap_min_priority_queue::Decrease_key(int i, int key)
 	while (i > 1 && Queue[Parent(i)][0] > Queue[i][0])
 	{
 		//troca de chaves
-		aux = Queue[i][0];
+		aux1 = Queue[i][0];
 		Queue[i][0] = Queue[Parent(i)][0];
-		Queue[Parent(i)][0] = aux;
+		Queue[Parent(i)][0] = aux1;
 
 		//troca de valores
-		aux = Queue[i][1];
+		aux2 = Queue[i][1];
 		Queue[i][1] = Queue[Parent(i)][1];
-		Queue[Parent(i)][1] = aux;
+		Queue[Parent(i)][1] = aux2;
 
 		i = Parent(i);
 	}

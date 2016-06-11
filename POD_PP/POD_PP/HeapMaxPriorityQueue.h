@@ -9,7 +9,7 @@ private:
 	int heap_size = 0;
 	const int infinite = 9999;
 	int Queue[50][2];
-	int limit = 50;
+	int limit = 0;
 	//Queue[][0] - key
 	//Queue[][1] - value
 
@@ -36,7 +36,7 @@ void heap_max_priority_queue::build_max_heap()
 	int aux;
 
 	/*
-	for (int i = heap_size; i > 1; i--)
+	for (int i = heap_size; i >= 1; i--)
 	{
 		aux = Queue[1][0];
 		Queue[1][0] = Queue[i][0];
@@ -91,7 +91,6 @@ void heap_max_priority_queue::Max_heapify(int i)
 };
 void heap_max_priority_queue::Insert(int key, int value)
 {
-	key = limit - key;
 
 	heap_size++;
 
@@ -100,14 +99,14 @@ void heap_max_priority_queue::Insert(int key, int value)
 
 	Increase_key(heap_size, key);
 
-	build_max_heap();
+	//build_max_heap();
 
 };
 void heap_max_priority_queue::ShowQueue()
 {
 	for (int i = 1; i < heap_size + 1; i++)
 	{
-		cout << limit - Queue[i][0] << ", " << Queue[i][1] << endl;
+		cout << Queue[i][0] << ", " << Queue[i][1] << endl;
 	}
 }
 
