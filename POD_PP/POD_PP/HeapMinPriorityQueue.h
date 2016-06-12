@@ -7,7 +7,7 @@ class heap_min_priority_queue
 private:
 	int heap_size = 0;
 	const int infinite = 9999;
-	int Queue[50][2];
+	int Queue[51][2];
 
 	int Parent(int i);
 	int Left(int i);
@@ -153,38 +153,3 @@ int heap_min_priority_queue::Right(int i)
 {
 	return 2 * i + 1;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
