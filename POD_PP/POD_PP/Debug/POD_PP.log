@@ -1,4 +1,7 @@
 ﻿  Main.cpp
-c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(43): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(149): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(45): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(187): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(370): warning C4101: 'tt': unreferenced local variable
+c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(371): warning C4101: 'saida': unreferenced local variable
+c:\users\jhone\documents\github\pod_pp\pod_pp\pod_pp\main.cpp(184): warning C4715: 'heap_min_priority_queue::Decrease_Priority': not all control paths return a value
   POD_PP.vcxproj -> C:\Users\Jhone\Documents\GitHub\POD_PP\POD_PP\Debug\POD_PP.exe

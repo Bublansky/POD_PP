@@ -1,5 +1,6 @@
 #include<iostream>
 #include<math.h>
+#include<stdlib.h>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 	int Minimum();
 	int Extract_min();
 	bool Decrease_key(int i, int key);
+	bool Decrease_Priority(int value, int key);
 
 	void ShowQueue();
 };
@@ -32,7 +34,7 @@ heap_min_priority_queue::heap_min_priority_queue()
 };
 void heap_min_priority_queue::ShowQueue()
 {
-	for (int i = 1; i < heap_size + 1; i++)
+	for (int i = 1; i <= heap_size; i++)
 	{
 		cout << Queue[i][0] << ", " << Queue[i][1] << endl;
 	}
@@ -144,6 +146,42 @@ bool heap_min_priority_queue::Decrease_key(int i, int key)
 	}
 	return true;
 };
+bool heap_min_priority_queue::Decrease_Priority(int value, int key)
+{
+	int aux1, aux2;
+
+	for (int i = 1; i <= heap_size; i++)
+	{
+		if (value == Queue[i][1])
+		{
+			if (key > Queue[i][0])
+			{
+				return false;
+			}
+
+			Queue[i][0] = key;
+
+			while (i > 1 && Queue[Parent(i)][0] > Queue[i][0])
+			{
+				//troca de chaves
+				aux1 = Queue[i][0];
+				Queue[i][0] = Queue[Parent(i)][0];
+				Queue[Parent(i)][0] = aux1;
+
+				//troca de valores
+				aux2 = Queue[i][1];
+				Queue[i][1] = Queue[Parent(i)][1];
+				Queue[Parent(i)][1] = aux2;
+
+				i = Parent(i);
+			}
+			return true;
+		}
+	}
+	
+
+	
+};
 int heap_min_priority_queue::Parent(int i)
 {
 	return trunc(i / 2);
@@ -157,6 +195,13 @@ int heap_min_priority_queue::Right(int i)
 	return 2 * i + 1;
 };
 
+/*
+struct No
+{
+	int Vertice, Peso;
+	No *Proximo;
+};
+*/
 
 
 int distancias[50];
@@ -165,6 +210,67 @@ int vertices;
 int infinito = 9999;
 int indefinido = -1;
 int adjacencias[50][50];
+int destino;
+//No adjacency_list[50];
+
+
+/*
+void Dijkstra(int origem)
+{
+	distancias[origem] = 0;
+	//cout << endl << "origem: " << origem;
+	heap_min_priority_queue fila;
+	for (int i = 1; i <= vertices; i++)
+	{
+		if (i != origem)
+		{
+			distancias[i] = infinito;
+			caminho[i] = indefinido;
+		}
+		fila.Insert(distancias[i], i);
+	}
+
+	//fila.ShowQueue();
+	int candidato;
+	//vértice mais próximo
+	int vmp;
+	vmp = fila.Extract_min();
+	//cout << endl << vmp << endl;
+	//cout << "primeiro da fila:" << vmp;
+	No aux;
+	//enquanto a fila de prioridade não está vazia
+	//vmp = fila.Extract_min();
+	//vmp = fila.Extract_min();
+	//cout << endl << vmp << endl << "hello";
+
+	//fila.ShowQueue();
+
+	//cout << endl << "hello";
+	while (vmp > 0)
+	{
+		//cout << endl << vmp << endl << "hello";
+		//cout << endl << vmp;
+		
+		aux = adjacency_list[vmp];
+		//cout << endl << "hello2";
+		//percorre todos os vizinho de vmp
+		while (aux.Proximo != NULL)
+		{
+			//cout << endl << "hello";
+			//candidato a próximo vertice do caminho
+			candidato = distancias[vmp] + aux.Peso;
+			if (candidato < distancias[aux.Vertice])
+			{
+				distancias[aux.Vertice] = candidato;
+				caminho[aux.Vertice] = vmp;
+				fila.Decrease_key(aux.Vertice, candidato);
+			}
+			aux = *aux.Proximo;
+		}
+		vmp = fila.Extract_min();
+	}
+}
+*/
 
 void Dijkstra(int origem)
 {
@@ -180,33 +286,45 @@ void Dijkstra(int origem)
 		fila.Insert(distancias[i], i);
 	}
 	int candidato;
-	//vértice mais próximo
-	int vmp = fila.Extract_min();
-	while (vmp > 0)
+	//vertice mais proximo
+	int vmp;
+
+	vmp = fila.Extract_min();
+	//cout << vmp << endl;
+	//fila.ShowQueue();
+	while (vmp >= 0)
 	{
-		//percorre todos os vértice para ver se forma aresta
-		for (int i = 1; i <= vertices; i++)
+		//cout << fila.Minimum();
+		//cout << endl << "vmp: " << vmp << endl;
+		if (vmp == destino)
+		{
+			return;
+		}
+		//cout << vmp << endl;
+		//percorre todos os vertice para ver se forma aresta
+		for (int i = 0; i < vertices; i++)
 		{
 			//se for vizinho de vmp
 			if (adjacencias[vmp][i] > 0)
 			{
-				//candidato a próximo vertice do caminho
-				candidato  = distancias[vmp] + adjacencias[vmp][i];
+				//candidato a proximo vertice do caminho
+				candidato = distancias[vmp] + adjacencias[vmp][i];
 				if (candidato < distancias[i])
 				{
 					distancias[i] = candidato;
 					caminho[i] = vmp;
-					fila.Decrease_key(i, candidato);
+					fila.Decrease_Priority(i, candidato);
 				}
 			}
 		}
+		vmp = fila.Extract_min();
 	}
 }
 void inicializaAdjacencias()
 {
-	for (int i = 1; i <= vertices; i++)
+	for (int i = 0; i < vertices; i++)
 	{
-		for (int j = 1; j <= vertices; j++)
+		for (int j = 0; j < vertices; j++)
 		{
 			if (i == j)
 			{
@@ -214,21 +332,54 @@ void inicializaAdjacencias()
 				break;
 			}
 			adjacencias[i][j] = -1;
+			adjacencias[j][i] = -1;	
 		}
 	}
+}
+int main2()
+{
+	int t;
+
+	heap_min_priority_queue fila;
+
+	fila.Insert(9999, 0);
+	fila.Insert(9999, 1);
+	fila.Insert(0, 2);
+	fila.Insert(9999, 3);
+	fila.Insert(9999, 4);
+	fila.Insert(9999, 5);
+	fila.Insert(9999, 6);
+	fila.Insert(9999, 7);
+	fila.Insert(9999, 8);
+	fila.Insert(9999, 9);
+	
+	//extraiu o 2
+	cout << fila.Extract_min() << endl;
+	fila.Decrease_Priority(0, 56);
+	fila.Decrease_Priority(6, 99);
+	//extraiu o 0
+	cout << fila.Extract_min() << endl;
+
+	cin >> t;
+
+	return 1;
 }
 
 int main()
 {
 	int tt;
-	int origem, destino, peso, saida[50], contador_caminho = -1;
+	int origem, peso, saida[50], contador_caminho = -1;
 	int arestas;
+	//No aux, *aux2;
 	
 	//inicializa as arestas do grafo
-	inicializaAdjacencias();
+	
+	//inicializaListaAdjacencias();
 
 	//leitura dos números de vértices e de arestas
 	cin >> vertices >> arestas;
+
+	inicializaAdjacencias();
 
 	//para cada aresta
 	for (int i = 0; i < arestas; i++)
@@ -236,30 +387,68 @@ int main()
 		//leitura da origem, do destino e do peso da aresta
 		cin >> origem >> destino >> peso;
 		adjacencias[origem][destino] = peso;
+		adjacencias[destino][origem] = peso;
+
+		/*
+		aux = adjacency_list[origem];
+		while (aux.Proximo != NULL)
+		{
+			aux = *aux.Proximo;
+		}
+		aux2 = (No *)malloc(sizeof(No));
+		aux2->Peso = peso;
+		aux2->Proximo = NULL;
+		aux2->Vertice = destino;
+		aux.Proximo = aux2;
+		adjacency_list[origem] = aux;
+		*/
 	}
 
 	//leitura da origem e do destino do menor caminho
 	cin >> origem >> destino;
 	
+
+	//cout << "começou dijkstra";
 	//executa o algoritmo de menor caminho
 	Dijkstra(origem);
-	
+	//cout << "terminou dijkstra";
+
+	/*
+	for (int j = 0; j < vertices; j++)
+	{
+		cout << distancias[j] << ", ";
+	}
+	cout << endl << endl;
+	for (int k = 0; k < vertices; k++)
+	{
+		cout << caminho[k] << ", ";
+	}
+	cout << endl;
+	*/
+	//cout << endl << "the end";
+	//cin >> tt;
+
 	//percorre o caminho inverso (destino para origem)
-	while(distancias[destino] > 0)
+	//         /*-------------------------------------------------------
+	while(destino != origem)
 	{
 		contador_caminho++;
 		saida[contador_caminho] = destino;
 		destino = caminho[destino];
 	}
-	
 	//mostra o caminho (origem para destino)
-	for (int i = 0; i <= contador_caminho; i++)
-	{
-		cout << saida[i] << " ";
-	}
 	
+	cout << origem << " ";
+	for (int l = contador_caminho; l >= 0 ; l--)
+	{
+		cout << saida[l] << " ";
+	}
+	//       //--------------------------------------------------------*/
+
+	//cout << endl << endl << endl << "finished";
+
 	//para segurar o console
-	cin >> tt;
+	//cin >> tt;
 	
 	return 0;
 }

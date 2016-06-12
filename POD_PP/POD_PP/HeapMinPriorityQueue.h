@@ -2,11 +2,12 @@
 
 using namespace std;
 
+
 class heap_min_priority_queue
 {
 private:
-	int heap_size = 0;
-	const int infinite = 9999;
+	int heap_size;
+	int infinite;
 	int Queue[51][2];
 
 	int Parent(int i);
@@ -21,15 +22,17 @@ public:
 	int Minimum();
 	int Extract_min();
 	bool Decrease_key(int i, int key);
-	
+
 	void ShowQueue();
 };
 heap_min_priority_queue::heap_min_priority_queue()
 {
+	heap_size = 0;
+	infinite = 9999;
 };
 void heap_min_priority_queue::ShowQueue()
 {
-	for (int i = 1; i < heap_size + 1; i++)
+	for (int i = 1; i <= heap_size; i++)
 	{
 		cout << Queue[i][0] << ", " << Queue[i][1] << endl;
 	}
