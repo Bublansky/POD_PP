@@ -23,7 +23,7 @@ public:
 	int Minimum();
 	int Extract_min();
 	bool Decrease_key(int i, int key);
-	bool Decrease_Priority(int value, int key);
+	void Increase_Priority(int value, int key);
 
 	void ShowQueue();
 };
@@ -42,7 +42,7 @@ void heap_min_priority_queue::ShowQueue()
 void heap_min_priority_queue::build_min_heap()
 {
 
-	for (int i = trunc(heap_size / 2); i >= 1; i--)
+	for (int i = (int) trunc(heap_size / 2); i >= 1; i--)
 	{
 		Min_heapify(i);
 	}
@@ -146,7 +146,7 @@ bool heap_min_priority_queue::Decrease_key(int i, int key)
 	}
 	return true;
 };
-bool heap_min_priority_queue::Decrease_Priority(int value, int key)
+void heap_min_priority_queue::Increase_Priority(int value, int key)
 {
 	int aux1, aux2;
 
@@ -156,7 +156,7 @@ bool heap_min_priority_queue::Decrease_Priority(int value, int key)
 		{
 			if (key > Queue[i][0])
 			{
-				return false;
+				return;
 			}
 
 			Queue[i][0] = key;
@@ -175,7 +175,7 @@ bool heap_min_priority_queue::Decrease_Priority(int value, int key)
 
 				i = Parent(i);
 			}
-			return true;
+			return;
 		}
 	}
 	
@@ -184,7 +184,7 @@ bool heap_min_priority_queue::Decrease_Priority(int value, int key)
 };
 int heap_min_priority_queue::Parent(int i)
 {
-	return trunc(i / 2);
+	return (int) trunc(i / 2);
 };
 int heap_min_priority_queue::Left(int i)
 {
@@ -298,14 +298,14 @@ void Dijkstra(int origem)
 		//cout << endl << "vmp: " << vmp << endl;
 		if (vmp == destino)
 		{
-			return;
+			//return;
 		}
 		//cout << vmp << endl;
 		//percorre todos os vertice para ver se forma aresta
 		for (int i = 0; i < vertices; i++)
 		{
 			//se for vizinho de vmp
-			if (adjacencias[vmp][i] > 0)
+			if (adjacencias[vmp][i] >= 0)
 			{
 				//candidato a proximo vertice do caminho
 				candidato = distancias[vmp] + adjacencias[vmp][i];
@@ -313,7 +313,7 @@ void Dijkstra(int origem)
 				{
 					distancias[i] = candidato;
 					caminho[i] = vmp;
-					fila.Decrease_Priority(i, candidato);
+					fila.Increase_Priority(i, candidato);
 				}
 			}
 		}
@@ -343,8 +343,8 @@ int main2()
 	heap_min_priority_queue fila;
 
 	fila.Insert(9999, 0);
-	fila.Insert(9999, 1);
-	fila.Insert(0, 2);
+	fila.Insert(0, 1);
+	fila.Insert(9999, 2);
 	fila.Insert(9999, 3);
 	fila.Insert(9999, 4);
 	fila.Insert(9999, 5);
@@ -353,11 +353,21 @@ int main2()
 	fila.Insert(9999, 8);
 	fila.Insert(9999, 9);
 	
+	//extraiu o 1
+	cout << fila.Extract_min() << endl;
+	fila.Increase_Priority(0, 38);
+	fila.Increase_Priority(2, 32);
 	//extraiu o 2
 	cout << fila.Extract_min() << endl;
-	fila.Decrease_Priority(0, 56);
-	fila.Decrease_Priority(6, 99);
+	fila.Increase_Priority(0, 34);
+	fila.Increase_Priority(3, 36);
+	fila.Increase_Priority(6, 106);
+	fila.Increase_Priority(8, 105);
 	//extraiu o 0
+	cout << fila.Extract_min() << endl;
+	fila.Increase_Priority(7, 52);
+	fila.Increase_Priority(8, 89);
+	//extraiu o 3
 	cout << fila.Extract_min() << endl;
 
 	cin >> t;
@@ -367,7 +377,7 @@ int main2()
 
 int main()
 {
-	int tt;
+	//int tt;
 	int origem, peso, saida[50], contador_caminho = -1;
 	int arestas;
 	//No aux, *aux2;
@@ -389,19 +399,6 @@ int main()
 		adjacencias[origem][destino] = peso;
 		adjacencias[destino][origem] = peso;
 
-		/*
-		aux = adjacency_list[origem];
-		while (aux.Proximo != NULL)
-		{
-			aux = *aux.Proximo;
-		}
-		aux2 = (No *)malloc(sizeof(No));
-		aux2->Peso = peso;
-		aux2->Proximo = NULL;
-		aux2->Vertice = destino;
-		aux.Proximo = aux2;
-		adjacency_list[origem] = aux;
-		*/
 	}
 
 	//leitura da origem e do destino do menor caminho
